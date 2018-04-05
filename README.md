@@ -261,3 +261,7 @@ Ou de façon plus concise avec une fonction fléchée :
 ```javascript
 const analyseMots = mots => mots.map(analyseUnMot)
 ```
+
+## Conclusion
+
+La correction ci-dessus se trouve dans `correction/analyseMots.js`.
