@@ -156,8 +156,13 @@ function analyseUnMot(mot) {
   // Notre tableau de voyelles
   const voyelles = ['a', 'e', 'i', 'o', 'u', 'y']
 
+  // La boucle
   for(let lettre of mot) {
-    if(voyelles.includes(mot)) {
+
+    // Le test pour vérifier si le mot est une voyelle
+    // et l'incrémentation de la propriété voyelles ou
+    // consonnes en conséquence
+    if(voyelles.includes(lettre)) {
       resultat.voyelles += 1
     }
     else {
@@ -170,10 +175,89 @@ function analyseUnMot(mot) {
 }
 ```
 
-Si en l'état on fait un `console.log(analyseUnMot('pouet'))`, on obtient :
+Si en l'état on fait un `console.log(analyseUnMot('wild'))`, on obtient :
 
-    { mot: 'pouet',
+    { mot: 'wild',
       lettres: {},
-      longueur: 5,
-      consonnes: 2,
-      voyelles: 3 }
+      longueur: 4,
+      consonnes: 3,
+      voyelles: 1 }
+
+### Comptage des lettres
+
+Toujours dans le corps de la boucle, on veut maintenant remplir l'objet `lettres` qui fait partie de notre objet `resultat`.
+
+Voici comment on procède, pour chaque `lettre` de `mot`. Par exemple, si on trouve un `a`:
+* Si la propriété `mot.lettres['a']` n'existe pas (`undefined`), alors on va la créer et lui donner une valeur initiale : comme on vient la rencontrer pour la 1ère fois, on lui associe la valeur 1.
+* Si en revanche elle existe, on augmente de 1 la valeur précédente.
+
+On ajoute cela au code précédent :
+
+
+```javascript
+function analyseUnMot(mot) {
+  // Notre objet de sortie où on a déjà mis 2 propriétés
+  const resultat = {
+    mot: mot,
+    lettres: {},
+    longueur: mot.length,
+    consonnes: 0,
+    voyelles: 0
+  }
+
+  // Notre tableau de voyelles
+  const voyelles = ['a', 'e', 'i', 'o', 'u', 'y']
+
+  // La boucle
+  for(let lettre of mot) {
+
+    // Le test pour vérifier si le mot est une voyelle
+    // et l'incrémentation de la propriété voyelles ou
+    // consonnes en conséquence
+    if(voyelles.includes(lettre)) {
+      resultat.voyelles += 1
+    }
+    else {
+      resultat.consonnes += 1
+    }
+
+    // DERNIER AJOUT: vérifier si la propriété
+    // resultat.lettres[lettre] existe. Si non,
+    // la créer avec une valeur initiale (1),
+    // et si oui, l'incrémenter
+    if(resultat.lettres[lettre] === undefined) {
+      resultat.lettres[lettre] = 1
+    }
+    else {
+      resultat.lettres[lettre] += 1
+    }
+  }
+
+  // On sait qu'on retournera l'objet créé plus haut
+  return resultat
+}
+```
+
+Si on refait `console.log('wild')`, on obtient :
+
+    { mot: 'wild',
+      lettres: { w: 1, i: 1, l: 1, d: 1 },
+      longueur: 4,
+      consonnes: 3,
+      voyelles: 1 }
+
+### 3ème étape : utiliser `map()`
+
+On a notre fonction d'analyse d'un mot. Notre fonction `analyseMots` qui analyse un tableau de mots peut s'écrire très simplement, comme ceci :
+
+```javascript
+function analyseMots(mots) {
+  return mots.map(analyseUnMot)
+}
+```
+
+Ou de façon plus concise avec une fonction fléchée :
+
+```javascript
+const analyseMots = mots => mots.map(analyseUnMot)
+```
