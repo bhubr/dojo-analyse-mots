@@ -246,7 +246,7 @@ Si on refait `console.log('wild')`, on obtient :
       consonnes: 3,
       voyelles: 1 }
 
-### 3ème étape : utiliser `map()`
+## 3ème étape : utiliser `map()`
 
 On a notre fonction d'analyse d'un mot. Notre fonction `analyseMots` qui analyse un tableau de mots peut s'écrire très simplement, comme ceci :
 
