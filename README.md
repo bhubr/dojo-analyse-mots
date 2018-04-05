@@ -96,3 +96,84 @@ function analyseUnMot(mot) {
   return resultat
 }
 ```
+
+### Boucle sur les caractères du mots
+
+Toujours dans notre fonction `analyseUnMot`, il va nous falloir une boucle, pour parcourir chaque caractère du mot.
+
+On peut le faire de deux façons, toutes deux semblables à celles utilisables sur un tableau ! La boucle `for` "classique", et la boucle `for..of`.
+
+On écrirait la boucle `for` classique ainsi :
+
+```javascript
+for(let i = 0 ; i < mot.length ; i++) {
+  const lettre = mot[i]
+  // faire quelque chose avec la lettre
+}
+```
+On écrirait la boucle `for..of` ainsi :
+
+```javascript
+for(let lettre of mot) {
+  // faire quelque chose avec la lettre
+}
+```
+
+On va prendre le `for..of` qui est plus simple.
+
+### Comptage les voyelles et consonnes
+
+On va commencer par déterminer, dans le corps de la boucle, si la lettre est une voyelle ou une consonne. Une façon de le faire est d'utiliser `Array.includes`, dont voici deux exemples :
+
+```javascript
+const jedis = ['Luke', 'Obiwan', 'Yoda']
+console.log(jedis.includes('Darth Vader')) // Affiche false
+
+const starks = ['Arya', 'Bran', 'Sansa']
+console.log(starks.include('Arya'))        // Affiche true
+```
+
+En résumé, **`Array.includes()` permet de déterminer si un élément se trouve dans un tableau** (il faut le lire à l'envers, c'est à dire qu'on cherche si le tableau *inclut* l'élément).
+
+En partant de ce principe, si on crée un tableau avec toutes les voyelles, une lettre sera une voyelle si elle appartient à ce tableau. Sinon ce sera une consonne.
+
+
+Si c'est une voyelle, on incrémente la propriété `voyelles` de 1, et sinon c'est `consonnes` qu'on incrémente de 1.
+
+On peut ajouter ce code au précédent :
+
+```javascript
+function analyseUnMot(mot) {
+  // Notre objet de sortie où on a déjà mis 2 propriétés
+  const resultat = {
+    mot: mot,
+    lettres: {},
+    longueur: mot.length,
+    consonnes: 0,
+    voyelles: 0
+  }
+
+  // Notre tableau de voyelles
+  const voyelles = ['a', 'e', 'i', 'o', 'u', 'y']
+
+  for(let lettre of mot) {
+    if(voyelles.includes(mot)) {
+      resultat.voyelles += 1
+    }
+    else {
+      resultat.consonnes += 1
+    }
+  }
+
+  // On sait qu'on retournera l'objet créé plus haut
+  return resultat
+}
+```
+
+Si en l'état on fait un `console.log(analyseUnMot('pouet'))`, on obtient :
+
+    { mot: 'pouet',
+      lettres: {},
+      longueur: 5,
+      consonnes: 2,
+      voyelles: 3 }
