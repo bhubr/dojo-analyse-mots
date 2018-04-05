@@ -15,21 +15,23 @@ describe('Test analyseMots', () => {
       {
         mot: 'anagramme',
         lettres: {
-          a: 2,
+          a: 3,
           e: 1,
           g: 1,
           m: 2,
-          n: 1
+          n: 1,
+          r: 1
         },
         longueur: 9,
-        voyelles: 3,
-        consonnes: 6
+        voyelles: 4,
+        consonnes: 5
       },
       {
         mot: 'ellipse',
         lettres: {
           e: 2,
           i: 1,
+          l: 2,
           p: 1,
           s: 1
         },
@@ -65,10 +67,29 @@ describe('Test analyseMots', () => {
           t: 2
         },
         longueur: 11,
-        voyelles: 4,
-        consonnes: 7
+        voyelles: 5,
+        consonnes: 6
       }
     ]
-    assert.deepEqual(resultat)
+    assert.deepEqual(resultat, attendu)
   })
+
+  it('test sur un tableau de mots', () => {
+      const tableauTest = ['mot']
+      const resultat = analyseMots(tableauTest)
+      const attendu = [
+        {
+          mot: 'mot',
+          lettres: {
+            m: 1,
+            o: 1,
+            t: 1
+          },
+          longueur: 3,
+          voyelles: 1,
+          consonnes: 2
+        }
+      ]
+      assert.deepEqual(resultat, attendu)
+    })
 })
